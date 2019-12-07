@@ -1,0 +1,9 @@
+ARG version="latest"
+FROM ubuntu:$version
+
+RUN echo "version is ..."$version
+ENV DB_PASSWORD admin
+ENV DB_USER system
+COPY test1 /apps
+run echo "license key .."$license_key
+CMD env
