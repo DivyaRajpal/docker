@@ -28,7 +28,7 @@ CMD echo $descpn |wc -c
 Step 3
 docker build -t mydockcnt -f Dockerfile.txt .
 
-Copy the Image created at last 
+docker inpsect mydockcnt
 (Note the layers being created)
 
 Step 4 
@@ -41,21 +41,21 @@ docker run <<image id>>
 
 38. Environment Variables
 ==========================
-docker run -it -e client=ORA-DOM1  -e IP=$(docker-machine ip) ubuntu /bin/bash
+docker run -it -e client=DevOps-Docker-Class  -e IP=$(docker-machine ip) ubuntu /bin/bash
 # echo $client
 # echo $IP
 
 39. Environment files
 =====================
 create envfile.txt
-client=ORA-DOM1
-Location=HYD
+client=DevOps-Docker-Class
+Location=Online
 
-docker run -it --env-file envfile.txt --name envcnteg ubuntu /bin/bash
+docker run -it --env-file envfile.txt --name mycontainer ubuntu /bin/bash
 # echo $client 
 # echo $Location
 
-docker run -it --env-file envfile.txt -e uname=$(whoami) --name envcnteg1 ubuntu /bin/bash
+docker run -it --env-file envfile.txt -e uname=$(whoami) --name mycontainer1 ubuntu /bin/bash
 # echo $client
 # echo $location
 # echo $uname
@@ -88,17 +88,17 @@ COPY . /app
 
 Step 4
 ======
-docker build -t acme/myimg1.0  -f Dockerfile.base .
+docker build -t ubuntumodified  -f Dockerfile.base .
 
 Step 5
 ======
 notepad Dockerfile
-FROM acme/myimg1.0 
+FROM ubuntumodified 
 RUN ["/bin/bash","-c", "echo from DCK Second Layer"]
 
 Step 6
 ======
-docker build -t acme/mynewimg1.0 -f Dockerfile .
+docker build -t ubuntunew -f Dockerfile .
 
 Step 7
 =========
@@ -106,7 +106,7 @@ notepad Dockerfile1
 FROM acme/mynewimg1.0
 CMD /app/hello.sh
 
-docker build -t acme/mynewimg2.0 -f Dockerfile1 . 
+docker build -t ubuntuanother -f Dockerfile1 . 
 
 docker ps -a 
 docker image ls
@@ -260,7 +260,8 @@ Step 5
 --remove the volume
 --remove container.
 
-11
+
+Exposing Ports:
 
 Step1
 =====
@@ -271,14 +272,7 @@ Step2
  Check for docker ps -a
  Open browser http://192.168.99.100:5001
 
-visit the nginxlogs directory in c/users/<<user>> 
-what does it contain?
 
-docker-machine ssh default
-sudo -i
-iptables -L 
-iptables -L --line-numbers
-iptables -t nat -L --line-numbers
 
 Step 3
 =======
@@ -300,38 +294,10 @@ docker run -dit --name devmtest1 -v ~/data:/app fedora bash
 
 -- refer files created in data directory available in app directory. This is binding container without volume.
 
+
+
+
 13.
-Implementation with NodeJs
-
-Step 1
-=======
-docker search -s5000 node
-(check for Image name official)
-
-Step 2
-=======
-docker pull node 
-
-Step 3
-=======
-cat >sample.js
-console.log("Sample Node Js file");
-
-Step 4
-========
-create folder in windows --> c:/user/<user directory>/nodex...(Copy sample.js here)
-docker run -it --name mynode -v ~/nodex:/usr/src/app -w /usr/src/app node bash
-#node Sample.js
-(Note the PWD, and Execution of node Sample.js)
-
-docker rm mynode
-
-Step 5
-=====
-docker run -it --rm --name mynode -v ~/nodex:/usr/src/app -w /usr/src/app node node Sample.js
-
-
-14.
 Mount Volume binding
 (Duplex)
 
@@ -367,7 +333,7 @@ Step 5
 
 Exit , Remove Containers
 
-15.
+14.
 Readonly Mounts
 
 Step 1
@@ -425,10 +391,10 @@ docker ps -a
 docker start webserver
 
 Step 9
-docker-machine ip
+
 docker port webserver
 curl $(docker-machine ip)
-Browser --> Open http://<ip> :80
+Browser --> Open http://127.0.0.1:80
 
 Step 10
 docker stop webserver
