@@ -103,7 +103,7 @@ docker build -t ubuntunew -f Dockerfile .
 Step 7
 =========
 notepad Dockerfile1
-FROM acme/mynewimg1.0
+FROM ubuntunew
 CMD ./app/hello.sh
 
 docker build -t ubuntuanother -f Dockerfile1 . 
