@@ -104,7 +104,8 @@ Step 7
 =========
 notepad Dockerfile1
 FROM ubuntunew
-CMD ./app/hello.sh
+COPY ./app /app
+CMD ["/bin/sh","-c","./app/hello.sh"]
 
 docker build -t ubuntuanother -f Dockerfile1 . 
 
