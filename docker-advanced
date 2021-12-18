@@ -26,7 +26,7 @@ RUN ["/bin/bash","-c","echo $descpn"]
 CMD echo $descpn |wc -c
 
 Step 3
-docker build -t myDockCnt -f Dockerfile.txt .
+docker build -t mydockcnt -f Dockerfile.txt .
 
 Copy the Image created at last 
 (Note the layers being created)
