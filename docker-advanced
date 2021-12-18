@@ -105,6 +105,7 @@ Step 7
 notepad Dockerfile1
 FROM ubuntunew
 COPY ./app /app
+RUN chmod +x /app/hello.sh
 CMD ["/bin/sh","-c","./app/hello.sh"]
 
 docker build -t ubuntuanother -f Dockerfile1 . 
